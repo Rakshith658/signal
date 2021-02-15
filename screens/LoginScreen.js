@@ -1,6 +1,6 @@
-import React,{useState,useEffect} from 'react'
+import React,{useState,useEffect,useLayoutEffect} from 'react'
 import { StatusBar } from 'expo-status-bar'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View,ActivityIndicator } from 'react-native'
 import { Button,Input,Image} from 'react-native-elements'
 import { KeyboardAvoidingView } from 'react-native'
 import { auth } from '../firebase'
@@ -9,20 +9,43 @@ const LoginScreen = ({navigation}) => {
 
     const [email, setemail] = useState('')
     const [password, setpassword] = useState('')
-
+    const [isloding, setisloding] = useState(true)
     useEffect(() => {
         const unsubscribe =auth.onAuthStateChanged((authUser)=>{
             if(authUser){
                 navigation.replace("Home")
+            }else{
+                setisloding(false)
             }
         })
 
         return unsubscribe;
     }, [])
 
+    let titles;
+    if(isloding){
+        titles="Signal"
+    }else{
+        titles="Login"
+    }
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            title:titles
+        })
+    }, [navigation])
+
     const signIn = () => {
         auth.signInWithEmailAndPassword(email,password)
         .catch((error)=>{alert(error)})
+    }
+    if(isloding){
+        return(
+        <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
+            {/* <ActivityIndicator size='large'/> */}
+            <ActivityIndicator size='large'  color="#2C6BED"/>
+            <Text style={{marginTop:20}}>Loading....</Text>
+        </View>
+        );
     }
     return (
         <KeyboardAvoidingView button="padding" style={styles.container}>

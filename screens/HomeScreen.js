@@ -34,9 +34,9 @@ const HomeScreen = ({navigation}) => {
     useLayoutEffect(() => {
         navigation.setOptions({
             title:"Signal",
-            headerStyle:{backgroundColor:"#fff"},
-            headerTitleStyle:{color:'black'},
-            headerTintColor:"black",
+            headerStyle:{backgroundColor:"#2C6BED"},
+            headerTitleStyle:{color:'#fff'},
+            headerTintColor:"#fff",
             headerTitleAlign:'center',
             headerLeft:()=>(
             <View style={{marginLeft:20}}>
@@ -51,21 +51,28 @@ const HomeScreen = ({navigation}) => {
             headerRight:()=>(
                 <View style={{marginRight:20,flexDirection:'row',justifyContent:'space-between',width:80}}>
                     <TouchableOpacity>
-                        <AntDesign name="camerao" size={25} color={'black'}/>
+                        <AntDesign name="camerao" size={25} color={'#fff'}/>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=>navigation.navigate("AddChat")}>
-                        <SimpleLineIcons name="pencil" size={25} color={'black'}/>
+                        <SimpleLineIcons name="pencil" size={25} color={'#fff'}/>
                     </TouchableOpacity>
                 </View>
             )
         })
     }, [navigation])
+
+    const enterChat = ( id, chatName) => {
+        navigation.navigate('Chat',{
+            id,
+            chatName,
+        })
+    }
     return (
         <SafeAreaView>
-            <StatusBar backgroundColor={"#fff"} barStyle="dark-content" />
+            <StatusBar backgroundColor={"#2C6BED"}  />
             <ScrollView style={styles.container}>
                 {chats.map(({id ,data:{chatName}})=>(
-                    <Customlistitem key={id} id={id} chatName={chatName}/>
+                    <Customlistitem key={id} id={id} chatName={chatName} enterChat={enterChat}/>
                 ))}
             </ScrollView>
         </SafeAreaView>

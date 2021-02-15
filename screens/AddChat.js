@@ -22,26 +22,26 @@ const AddChat = ({navigation}) => {
     useLayoutEffect(() => {
         navigation.setOptions({
             title:"Add a new Chat",
-            headerStyle:{backgroundColor:"#fff"},
-            headerTitleStyle:{color:'black'},
-            headerTintColor:"black",
+            headerStyle:{backgroundColor:"#2C6BED"},
+            headerTitleStyle:{color:'#fff'},
+            headerTintColor:"#fff",
             headerTitleAlign:'center',
         })
     }, [navigation])
     return (
         <View style={styles.container}>
-            <StatusBar backgroundColor={"#fff"} barStyle="dark-content" />
+            <StatusBar backgroundColor={"#2C6BED"}  />
             <Input 
                 placeholder="Enter a Chat name"
                 value={input}
                 onChangeText={Text=>setinput(Text)}
                 leftIcon={
-                    <Icon name="wechat" type="antdesign" size={24} color={"black"}/>
+                    <Icon name="wechat" type="antdesign" size={24} color={"#2C6BED"}/>
                 }
                 style={styles.input}
                 onSubmitEditing={createChat}
             />
-            <Button onPress={createChat} title="Create new Chat" containerStyle={styles.button}/>
+            <Button disabled={!input} onPress={createChat} title="Create new Chat" containerStyle={styles.button}/>
         </View>
     )
 }
